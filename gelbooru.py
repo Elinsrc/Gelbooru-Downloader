@@ -8,9 +8,12 @@ directory = "Gelbooru_downloads/"
 
 async def main():
     data = requests.get("https://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&tags={}&pid={}".format(tags, pid)).json()
-    
+
     if not os.path.exists(os.path.dirname(directory)):
         os.makedirs(os.path.dirname(directory))
+
+    print("Найденно: {} файлов\n".format(len(data["post"])))
+    await asyncio.sleep(3)
 
     for i in data["post"]:
         file_dir = directory + i["image"]
@@ -21,7 +24,7 @@ async def main():
             continue
 
         downloader = SmartDL(url, directory + i["image"], progress_bar=True, timeout=10, verify=False)
-        print("\nЗагрузка файла: " + i["image"])
+        print("Загрузка файла: " + i["image"])
         downloader.start()
 
     print("\nФайлы сохраненны в папку " + directory)
