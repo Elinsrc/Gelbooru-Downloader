@@ -8,10 +8,7 @@ directory = "Gelbooru_downloads/"
 
 async def main():
     data = requests.get("https://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&tags={}&pid={}".format(tags, pid)).json()
-
-    img_data = data["post"]
-    image = random.choice(img_data)
-
+    
     if not os.path.exists(os.path.dirname(directory)):
         os.makedirs(os.path.dirname(directory))
 
